@@ -1,11 +1,15 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private TMP_Text pitchText;
+    [SerializeField] private TMP_Text mousePosText;
     [SerializeField] private TMP_Text screenHeightText;
+    [SerializeField] private TMP_Text pitchText;
+    [SerializeField] private TMP_Text pressedButtonText;
+
+    private int pressedFly = 0;
+    private int pressedEgg = 0;
     private void OnEnable()
     {
         Controller.OnFlap += OnFlap;
@@ -22,11 +26,15 @@ public class Movement : MonoBehaviour
 
     private void OnFlap()
     {
+        pressedFly += 1;
+        pressedButtonText.text = "Egg: " + pressedEgg + "\nFly: " + pressedFly;
         Debug.Log("Flap");
     }
 
     private void OnLayEgg()
     {
+        pressedEgg += 1;
+        pressedButtonText.text = "Egg: " + pressedEgg + "\nFly: " + pressedFly;
         Debug.Log("Lay Egg");
     }
 
@@ -37,9 +45,9 @@ public class Movement : MonoBehaviour
         //Remap the mouse position to range: -1 to 1
         float pitch = -1.0f + ((mouseY * 2.0f) / screenHeight);
 
-        pitchText.text = "X:" + mousePos.x + "\nY:" + mousePos.y;
+        mousePosText.text = "X:" + mousePos.x + "\nY:" + mousePos.y;
         screenHeightText.text = "Screen Height: " + screenHeight;
-
+        pitchText.text = "Pitch: " + pitch;
         Debug.Log(pitch);
 
     }
